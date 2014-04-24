@@ -47,7 +47,10 @@ asm-vendor(prop, args)
   width 100%
   height 100px
 
-.asm-closed
+  /*li
+    display inline-block*/
+
+.asm-body-closed
   left 0
   top 0
   asm-vendor('transition', all 0.3s ease-in-out)
@@ -57,7 +60,7 @@ asm-vendor(prop, args)
 .asm-left
   left -300px
 
-.asm-open .asm-left
+.asm-left-open
   left 0
 
 .asm-body-push-left
@@ -69,7 +72,7 @@ asm-vendor(prop, args)
 .asm-right
   right -300px
 
-.asm-open .asm-right
+.asm-right-open
   right 0
 
 .asm-body-push-right
@@ -81,7 +84,7 @@ asm-vendor(prop, args)
 .asm-top
   top -100px
 
-.asm-open .asm-top
+.asm-top-open
   top 0
 
 .asm-body-push-top
@@ -93,7 +96,7 @@ asm-vendor(prop, args)
 .asm-bottom
   bottom -100px
 
-.asm-open .asm-bottom
+.asm-bottom-open
   bottom 0
 
 .asm-body-push-bottom
