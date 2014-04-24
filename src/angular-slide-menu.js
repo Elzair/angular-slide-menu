@@ -51,10 +51,10 @@ slideMenu.directive('asmWrapper', function($compile, $document) {
   return {
       restrict: 'AEC'
     , controller: function($scope, $element, $attrs) {
-        this.toggleOpen = function() {
+        this.toggleOpen = function(push) {
           $element[0].classList.toggle('asm-open');
           $element[0].classList.toggle('asm-closed');
-          switch($attrs.push) {
+          switch(push) {
             case 'top':
               $element[0].classList.toggle('asm-body-push-top');
               break;
@@ -100,7 +100,7 @@ slideMenu.directive('asmControl', function($document, $compile) {
         element[0].innerHTML = '<a href="#">'+element[0].innerHTML+'</a>';
         element.find('a').bind('click', function(ev) {
           ev.preventDefault();
-          asmWrapperCtrl.toggleOpen();
+          asmWrapperCtrl.toggleOpen(element[0].dataset.push);
         });
         $compile(element.contents())(scope);
       }

@@ -42,8 +42,14 @@ asm-vendor(prop, args)
   /*li
     display block*/
 
+.asm-vertical
+  left 0
+  width 100%
+  height 100px
+
 .asm-closed
   left 0
+  top 0
   asm-vendor('transition', all 0.3s ease-in-out)
 
 // Left
@@ -53,6 +59,10 @@ asm-vendor(prop, args)
 
 .asm-open .asm-left
   left 0
+
+.asm-body-push-left
+  left 300px
+  asm-vendor('transition', all 0.3s ease-in-out)
 
 // Right
 
@@ -64,4 +74,28 @@ asm-vendor(prop, args)
 
 .asm-body-push-right
   left -300px
+  asm-vendor('transition', all 0.3s ease-in-out)
+
+// Top
+
+.asm-top
+  top -100px
+
+.asm-open .asm-top
+  top 0
+
+.asm-body-push-top
+  top 100px
+  asm-vendor('transition', all 0.3s ease-in-out)
+
+// Bottom
+
+.asm-bottom
+  bottom -100px
+
+.asm-open .asm-bottom
+  bottom 0
+
+.asm-body-push-bottom
+  top -100px
   asm-vendor('transition', all 0.3s ease-in-out)

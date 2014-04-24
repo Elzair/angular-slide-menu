@@ -1,1 +1,216 @@
-!function(t){function s(i){if(e[i])return e[i].exports;var a=e[i]={exports:{},id:i,loaded:!1};return t[i].call(a.exports,a,a.exports,s),a.loaded=!0,a.exports}var e={};return s.m=t,s.c=e,s.p="",s(0)}([function(t,s,e){e(1),t.exports=e(2)},function(){var t=angular.module("slideMenu",[]);t.directive("asmSlideLeft",function(){return{restrict:"AEC",replace:!0,link:function(t,s){s[0].classList.add("asm"),s[0].classList.add("asm-horizontal"),s[0].classList.add("asm-left")}}}),t.directive("asmSlideRight",function(){return{restrict:"AEC",replace:!0,link:function(t,s){s[0].classList.add("asm"),s[0].classList.add("asm-horizontal"),s[0].classList.add("asm-right")}}}),t.directive("asmPushLeft",function(){return{restrict:"AEC",replace:!0,link:function(t,s){s[0].classList.add("asm"),s[0].classList.add("asm-horizontal"),s[0].classList.add("asm-left")}}}),t.directive("asmPushRight",function(){return{restrict:"AEC",link:function(t,s){s[0].classList.add("asm"),s[0].classList.add("asm-horizontal"),s[0].classList.add("asm-right")}}}),t.directive("asmWrapper",function(t,s){return{restrict:"AEC",controller:function(t,e,i){this.toggleOpen=function(){switch(e[0].classList.toggle("asm-open"),e[0].classList.toggle("asm-closed"),i.push){case"top":e[0].classList.toggle("asm-body-push-top");break;case"bottom":e[0].classList.toggle("asm-body-push-bottom");break;case"left":e[0].classList.toggle("asm-body-push-left");break;case"right":e[0].classList.toggle("asm-body-push-right")}if(i.mask){var t=s[0].getElementById("asm-mask");t?e[0].removeChild(t):(t=s[0].createElement("div"),t.setAttribute("id","asm-mask"),e[0].appendChild(t))}}},link:function(s,e){e[0].classList.add("asm-wrapper"),e[0].classList.add("asm-closed"),t(e.contents())(s)}}}),t.directive("asmControl",function(t,s){return{restrict:"AEC",require:"^asmWrapper",link:function(t,e,i,a){e[0].innerHTML='<a href="#">'+e[0].innerHTML+"</a>",e.find("a").bind("click",function(t){t.preventDefault(),a.toggleOpen()}),s(e.contents())(t)}}})},function(t,s,e){e(4)(e(3))},function(t){t.exports=".asm-wrapper{position:relative;top:0;left:0;z-index:10}#asm-mask{position:fixed;top:0;left:0;z-index:15;width:100%;height:100%;background:rgba(0,0,0,.8)}.asm{position:fixed;z-index:20;overflow:hidden;-webkit-transition:all .3s ease-in-out;-moz-transition:all .3s ease-in-out;-ms-transition:all .3s ease-in-out;-o-transition:all .3s ease-in-out;transition:all .3s ease-in-out}.asm-horizontal{top:0;width:300px;height:100%}.asm-closed{left:0;-webkit-transition:all .3s ease-in-out;-moz-transition:all .3s ease-in-out;-ms-transition:all .3s ease-in-out;-o-transition:all .3s ease-in-out;transition:all .3s ease-in-out}.asm-left{left:-300px}.asm-open .asm-left{left:0}.asm-right{right:-300px}.asm-open .asm-right{right:0}.asm-body-push-right{left:-300px;-webkit-transition:all .3s ease-in-out;-moz-transition:all .3s ease-in-out;-ms-transition:all .3s ease-in-out;-o-transition:all .3s ease-in-out;transition:all .3s ease-in-out}"},function(t){t.exports=function(t){var s=document.createElement("style");s.type="text/css",s.styleSheet?s.styleSheet.cssText=t:s.appendChild(document.createTextNode(t));var e=document.getElementsByTagName("head")[0];return e.appendChild(s),function(){e.removeChild(s)}}}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+/******/ 		
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 		
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+/******/ 		
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/ 	
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/ 	
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/ 	
+/******/ 	
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(1);
+	module.exports = __webpack_require__(2);
+
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var slideMenu = angular.module('slideMenu', []);
+	
+	slideMenu.directive('asmSlideLeft', function($compile) {
+	  return {
+	      restrict: 'AEC'
+	    , replace: true
+	    , link: function(scope, element, attr) {
+	        element[0].classList.add('asm');
+	        element[0].classList.add('asm-horizontal');
+	        element[0].classList.add('asm-left');
+	      }
+	  };
+	});
+	
+	slideMenu.directive('asmSlideRight', function($compile) {
+	  return {
+	      restrict: 'AEC'
+	    , replace: true
+	    , link: function(scope, element, attr) {
+	      element[0].classList.add('asm');
+	      element[0].classList.add('asm-horizontal');
+	      element[0].classList.add('asm-right');
+	    }
+	  };
+	});
+	
+	slideMenu.directive('asmPushLeft', function($compile) {
+	  return {
+	      restrict: 'AEC'
+	    , replace: true
+	    , link: function(scope, element, attr) {
+	        element[0].classList.add('asm');
+	        element[0].classList.add('asm-horizontal');
+	        element[0].classList.add('asm-left');
+	      }
+	  };
+	});
+	
+	slideMenu.directive('asmPushRight', function($compile) {
+	  return {
+	      restrict: 'AEC'
+	    , link: function(scope, element, attr) {
+	        element[0].classList.add('asm');
+	        element[0].classList.add('asm-horizontal');
+	        element[0].classList.add('asm-right');
+	      }
+	  };
+	});
+	
+	slideMenu.directive('asmWrapper', function($compile, $document) {
+	  return {
+	      restrict: 'AEC'
+	    , controller: function($scope, $element, $attrs) {
+	        this.toggleOpen = function(push) {
+	          $element[0].classList.toggle('asm-open');
+	          $element[0].classList.toggle('asm-closed');
+	          switch(push) {
+	            case 'top':
+	              $element[0].classList.toggle('asm-body-push-top');
+	              break;
+	            case 'bottom':
+	              $element[0].classList.toggle('asm-body-push-bottom');
+	              break;
+	            case 'left':
+	              $element[0].classList.toggle('asm-body-push-left');
+	              break;
+	            case 'right':
+	              $element[0].classList.toggle('asm-body-push-right');
+	              break;
+	            default:
+	              break;
+	          }
+	          // Create or destroy asm-mask
+	          if ($attrs.mask) {
+	            var mask = $document[0].getElementById('asm-mask');
+	            if (mask) {
+	              $element[0].removeChild(mask);
+	            }
+	            else {
+	              mask = $document[0].createElement('div');
+	              mask.setAttribute('id', 'asm-mask');
+	              $element[0].appendChild(mask);
+	            }
+	          }
+	        };
+	      }
+	    , link: function(scope, element, attr) {
+	        element[0].classList.add('asm-wrapper');
+	        element[0].classList.add('asm-closed');
+	        $compile(element.contents())(scope);
+	      }
+	  };
+	});
+	
+	slideMenu.directive('asmControl', function($document, $compile) {
+	  return {
+	      restrict: 'AEC'
+	    , require: '^asmWrapper'
+	    , link: function(scope, element, attrs, asmWrapperCtrl) {
+	        element[0].innerHTML = '<a href="#">'+element[0].innerHTML+'</a>';
+	        element.find('a').bind('click', function(ev) {
+	          ev.preventDefault();
+	          asmWrapperCtrl.toggleOpen(element[0].dataset.push);
+	        });
+	        $compile(element.contents())(scope);
+	      }
+	  };
+	});
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	var dispose = __webpack_require__(4)
+		// The css code:
+		(__webpack_require__(3))
+	if(false) {
+		module.hot.accept();
+		module.hot.dispose(dispose);
+	}
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports =
+		".asm-wrapper {\n  position: relative;\n  top: 0;\n  left: 0;\n  z-index: 10;\n}\n#asm-mask {\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 15;\n  width: 100%;\n  height: 100%;\n  background: rgba(0,0,0,0.8);\n}\n.asm {\n  position: fixed;\n  z-index: 20;\n  overflow: hidden;\n  -webkit-transition: all 0.3s ease-in-out;\n  -moz-transition: all 0.3s ease-in-out;\n  -ms-transition: all 0.3s ease-in-out;\n  -o-transition: all 0.3s ease-in-out;\n  transition: all 0.3s ease-in-out;\n/*ul\n    list-style-type none\n    margin 0\n    padding 0\n    text-align center*/\n}\n.asm-horizontal {\n  top: 0;\n  width: 300px;\n  height: 100%;\n/*li\n    display block*/\n}\n.asm-vertical {\n  left: 0;\n  width: 100%;\n  height: 100px;\n}\n.asm-closed {\n  left: 0;\n  top: 0;\n  -webkit-transition: all 0.3s ease-in-out;\n  -moz-transition: all 0.3s ease-in-out;\n  -ms-transition: all 0.3s ease-in-out;\n  -o-transition: all 0.3s ease-in-out;\n  transition: all 0.3s ease-in-out;\n}\n.asm-left {\n  left: -300px;\n}\n.asm-open .asm-left {\n  left: 0;\n}\n.asm-body-push-left {\n  left: 300px;\n  -webkit-transition: all 0.3s ease-in-out;\n  -moz-transition: all 0.3s ease-in-out;\n  -ms-transition: all 0.3s ease-in-out;\n  -o-transition: all 0.3s ease-in-out;\n  transition: all 0.3s ease-in-out;\n}\n.asm-right {\n  right: -300px;\n}\n.asm-open .asm-right {\n  right: 0;\n}\n.asm-body-push-right {\n  left: -300px;\n  -webkit-transition: all 0.3s ease-in-out;\n  -moz-transition: all 0.3s ease-in-out;\n  -ms-transition: all 0.3s ease-in-out;\n  -o-transition: all 0.3s ease-in-out;\n  transition: all 0.3s ease-in-out;\n}\n.asm-top {\n  top: -100px;\n}\n.asm-open .asm-top {\n  top: 0;\n}\n.asm-body-push-top {\n  top: 100px;\n  -webkit-transition: all 0.3s ease-in-out;\n  -moz-transition: all 0.3s ease-in-out;\n  -ms-transition: all 0.3s ease-in-out;\n  -o-transition: all 0.3s ease-in-out;\n  transition: all 0.3s ease-in-out;\n}\n.asm-bottom {\n  bottom: -100px;\n}\n.asm-open .asm-bottom {\n  bottom: 0;\n}\n.asm-body-push-bottom {\n  top: -100px;\n  -webkit-transition: all 0.3s ease-in-out;\n  -moz-transition: all 0.3s ease-in-out;\n  -ms-transition: all 0.3s ease-in-out;\n  -o-transition: all 0.3s ease-in-out;\n  transition: all 0.3s ease-in-out;\n}\n";
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	module.exports = function addStyle(cssCode) {
+		if(true) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+		var styleElement = document.createElement("style");
+		styleElement.type = "text/css";
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = cssCode;
+		} else {
+			styleElement.appendChild(document.createTextNode(cssCode));
+		}
+		var head = document.getElementsByTagName("head")[0];
+		head.appendChild(styleElement);
+		return function() {
+			head.removeChild(styleElement);
+		};
+	}
+
+/***/ }
+/******/ ])
+/*
+//@ sourceMappingURL=angular-slide-menu.js.map
+*/
