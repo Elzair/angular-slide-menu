@@ -1,6 +1,6 @@
 {
   "name": "angular-slide-menu",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A simple, mobile-ready sliding menu directive for AngularJS",
   "main": "index.js",
   "scripts": {
@@ -24,5 +24,13 @@
   "bugs": {
     "url": "https://github.com/Elzair/angular-slide-menu/issues"
   },
-  "homepage": "https://github.com/Elzair/angular-slide-menu"
+  "homepage": "https://github.com/Elzair/angular-slide-menu",
+  "devDependencies": {
+    "gulp": "~3.6.2",
+    "webpack": "~1.1.8",
+    "style-loader": "~0.6.3",
+    "css-loader": "~0.6.12",
+    "stylus-loader": "~0.2.0",
+    "gulp-util": "~2.2.14"
+  }
 }
