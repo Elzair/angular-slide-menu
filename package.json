@@ -1,0 +1,28 @@
+{
+  "name": "angular-slide-menu",
+  "version": "0.1.0",
+  "description": "A simple, mobile-ready sliding menu directive for AngularJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Elzair/angular-slide-menu.git"
+  },
+  "keywords": [
+    "angular",
+    "angularjs",
+    "angular-directive",
+    "slide-menu",
+    "push-menu",
+    "browserify",
+    "webpack"
+  ],
+  "author": "Philip Woods",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Elzair/angular-slide-menu/issues"
+  },
+  "homepage": "https://github.com/Elzair/angular-slide-menu"
+}
