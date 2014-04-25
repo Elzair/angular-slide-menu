@@ -8,7 +8,7 @@ module.exports = {
     } 
   , output: {
         path: __dirname + '/dist'
-      , filename: 'angular-slide-menu.js'
+      , filename: 'angular-slide-menu.min.js'
     }
   , module: {
       loaders: [

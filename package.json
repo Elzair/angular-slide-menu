@@ -2,7 +2,7 @@
   "name": "angular-slide-menu",
   "version": "0.2.1",
   "description": "A simple, mobile-ready sliding menu directive for AngularJS",
-  "main": "dist/angular-slide-menu.js",
+  "main": "dist/angular-slide-menu",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
