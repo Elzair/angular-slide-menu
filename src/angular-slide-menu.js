@@ -3,7 +3,7 @@ var slideMenu = angular.module('slideMenu', []);
 slideMenu.factory('asmState', ['$rootScope', function($rootScope) {
   // This object tracks the status of each window and whether or not
   // it must be the only active window at a given time 
-  $rootScope.asmMenuStates = {
+  $rootScope.asmStates = {
       'slideLeft': {active: false, exclusive: false}
     , 'slideRight': {active: false, exclusive: false}
     , 'slideTop': {active: false, exclusive: false}
@@ -13,261 +13,146 @@ slideMenu.factory('asmState', ['$rootScope', function($rootScope) {
     , 'pushTop': {active: false, exclusive: true}
     , 'pushBottom': {active: false, exclusive: true}
   };
-  var toggle = function(menu) {
-    if ($rootScope.asmMenuStates.hasOwnProperty(menu)) {
+
+  // This object tracks whether or not to push the asm-wrapper
+  $rootScope.asmPush = null;
+
+  /** This function toggles one of the menus listed in asmStates from 
+   *  active to inactive and vice-versa based on certain criteria.
+   *  @param menuKey the menu to attempt to toggle
+   */
+  var toggle = function(menuKey) {
+    if ($rootScope.asmStates.hasOwnProperty(menuKey)) {
+      var menuValue = $rootScope.asmStates[menuKey];
       var canToggle = true;
-      var m = null, men = $rootScope.asmMenuStates[menu];
-      for (m in $rootScope.asmMenuStates) {
-        var me = $rootScope.asmMenuStates[m];
+      var key = null
+      for (key in $rootScope.asmStates) {
+        var value = $rootScope.asmStates[key];
         // Ensure that no other exclusive menus are active, and do not 
-        // toggle an exclusive menu if any other menu is active.
-        if ((m !== menu) && ((me.exclusive && me.active && ) || men.exclusive)) {
+        // activate an exclusive menu if any other menu is active.
+        if ((key !== menuKey) && ((value.exclusive && value.active) || menuValue.exclusive)) {
           canToggle = false;
+          break;
         }
       }
       if (canToggle) {
-        men.active = !men.active;
+        menuValue.active = !menuValue.active;
+        // Update asm-wrapper on whether it needs pushing aside
+        $rootScope.asmPush = menuValue.exclusive ? menuKey : null;
       }
     } 
   };
 }]);
 
-slideMenu.directive('asmSlideLeft', ['asmState', function(asmState) {
+slideMenu.directive('asmSlideLeft', function() {
   return {
-      restrict: 'AEC'
-    , priority: 1000
-    , controller: function($scope, $element, $attrs) {
-        $scope.asmSlideLeftClasses = ['asm', 'asm-horizontal', 'asm-left'];
-        ]
-        $scope.watch('asmMenuStates.slideLeft', function(newState, oldState) {
-          if (newState && !oldState) {
-            $scope.asmSlideLeftClasses = ['asm', 'asm-horizontal', 'asm-left', 'asm-left-open'];
-          }
-          else if (!newState && oldState) {
-            $scope.asmSlideLeftClasses = ['asm', 'asm-horizontal', 'asm-left'];
-          }
-        });
-      }
-    , link: function(scope, element, attr) {
-        element[0].classList.add('asm');
-        element[0].classList.add('asm-horizontal');
-        element[0].classList.add('asm-left');
-      }
+       restrict: 'AEC'
+     , scope: {
+        'asmStates.slideLeft.active': '='
+       }
+     , transclude: true
+     , template: '<div ng-class="{asm: true, asm-horizontal: true, asm-left: true, ' + 
+        'asm-left-open: asmStates.slideLeft.active}" ng-transclude></div>' 
   };
-}]);
+});
 
-slideMenu.directive('asmPushLeft', ['asmState', function(asmState) {
+slideMenu.directive('asmPushLeft', function() {
   return {
-      restrict: 'AEC'
-    , priority: 1000
-    , controller: function($scope, $element, $attrs) {
-        $scope.asmPushLeftClasses = ['asm', 'asm-horizontal', 'asm-left'];
-        ]
-        $scope.watch('asmMenuStates.pushLeft', function(newState, oldState) {
-          if (newState && !oldState) {
-            $scope.asmPushLeftClasses = ['asm', 'asm-horizontal', 'asm-left', 'asm-left-open'];
-          }
-          else if (!newState && oldState) {
-            $scope.asmPushLeftClasses = ['asm', 'asm-horizontal', 'asm-left'];
-          }
-        });
-      }
-    , link: function(scope, element, attr) {
-        element[0].classList.add('asm');
-        element[0].classList.add('asm-horizontal');
-        element[0].classList.add('asm-left');
-      }
+       restrict: 'AEC'
+     , scope: {
+        'asmStates.pushLeft.active': '='
+       }
+     , transclude: true
+     , template: '<div ng-class="{asm: true, asm-horizontal: true, asm-left: true, ' + 
+        'asm-left-open: asmStates.pushLeft.active}" ng-transclude></div>' 
   };
-}]);
+});
 
-slideMenu.directive('asmSlideRight', ['$compile', function($compile) {
+slideMenu.directive('asmSlideRight', function() {
   return {
-      restrict: 'AEC'
-    , priority: 1000
-    , controller: function($scope, $element, $attrs) {
-        $scope.asmSlideRightClasses = ['asm', 'asm-horizontal', 'asm-right'];
-        ]
-        $scope.watch('asmMenuStates.slideRight', function(newState, oldState) {
-          if (newState && !oldState) {
-            $scope.asmSlideRightClasses = ['asm', 'asm-horizontal', 'asm-right', 'asm-right-open'];
-          }
-          else if (!newState && oldState) {
-            $scope.asmSlideRightClasses = ['asm', 'asm-horizontal', 'asm-right'];
-          }
-        });
-      }
-    , link: function(scope, element, attr) {
-      element[0].classList.add('asm');
-      element[0].classList.add('asm-horizontal');
-      element[0].classList.add('asm-right');
-    }
+       restrict: 'AEC'
+     , scope: {
+        'asmStates.slideRight.active': '='
+       }
+     , transclude: true
+     , template: '<div ng-class="{asm: true, asm-horizontal: true, asm-right: true, ' + 
+        'asm-right-open: asmStates.slideRight.active}" ng-transclude></div>' 
   };
-}]);
+});
 
-slideMenu.directive('asmPushRight', ['$compile', function($compile) {
+slideMenu.directive('asmPushRight', function() {
   return {
-      restrict: 'AEC'
-    , priority: 1000
-    , controller: function($scope, $element, $attrs) {
-        $scope.asmPushRightClasses = ['asm', 'asm-horizontal', 'asm-right'];
-        ]
-        $scope.watch('asmMenuStates.pushRight', function(newState, oldState) {
-          if (newState && !oldState) {
-            $scope.asmPushRightClasses = ['asm', 'asm-horizontal', 'asm-right', 'asm-right-open'];
-          }
-          else if (!newState && oldState) {
-            $scope.asmPushRightClasses = ['asm', 'asm-horizontal', 'asm-right'];
-          }
-        });
-      }
-    , link: function(scope, element, attr) {
-      element[0].classList.add('asm');
-      element[0].classList.add('asm-horizontal');
-      element[0].classList.add('asm-right');
-    }
+       restrict: 'AEC'
+     , scope: {
+        'asmStates.pushRight.active': '='
+       }
+     , transclude: true
+     , template: '<div ng-class="{asm: true, asm-horizontal: true, asm-right: true, ' + 
+        'asm-right-open: asmStates.pushRight.active}" ng-transclude></div>' 
   };
-}]);
+});
 
-slideMenu.directive('asmSlideTop', ['$compile', function($compile) {
+slideMenu.directive('asmSlideTop', function() {
   return {
-      restrict: 'AEC'
-    , priority: 1000
-    , controller: function($scope, $element, $attrs) {
-        $scope.asmSlideTopClasses = ['asm', 'asm-horizontal', 'asm-top'];
-        ]
-        $scope.watch('asmMenuStates.slideTop', function(newState, oldState) {
-          if (newState && !oldState) {
-            $scope.asmSlideTopClasses = ['asm', 'asm-horizontal', 'asm-top', 'asm-top-open'];
-          }
-          else if (!newState && oldState) {
-            $scope.asmSlideTopClasses = ['asm', 'asm-horizontal', 'asm-top'];
-          }
-        });
-      }
-    , link: function(scope, element, attr) {
-        element[0].classList.add('asm');
-        element[0].classList.add('asm-vertical');
-        element[0].classList.add('asm-top');
-      }
+       restrict: 'AEC'
+     , scope: {
+        'asmStates.slideTop.active': '='
+       }
+     , transclude: true
+     , template: '<div ng-class="{asm: true, asm-vertical: true, asm-top: true, ' + 
+        'asm-top-open: asmStates.slideTop.active}" ng-transclude></div>' 
   };
-}]);
+});
 
-slideMenu.directive('asmPushTop', ['$compile', function($compile) {
+slideMenu.directive('asmPushTop', function() {
   return {
       restrict: 'AEC'
-    , priority: 1000
-    , controller: function($scope, $element, $attrs) {
-        $scope.asmPushTopClasses = ['asm', 'asm-horizontal', 'asm-top'];
-        ]
-        $scope.watch('asmMenuStates.pushTop', function(newState, oldState) {
-          if (newState && !oldState) {
-            $scope.asmPushTopClasses = ['asm', 'asm-horizontal', 'asm-top', 'asm-top-open'];
-          }
-          else if (!newState && oldState) {
-            $scope.asmPushTopClasses = ['asm', 'asm-horizontal', 'asm-top'];
-          }
-        });
-      }
-    , link: function(scope, element, attr) {
-        element[0].classList.add('asm');
-        element[0].classList.add('asm-vertical');
-        element[0].classList.add('asm-top');
-      }
+     , scope: {
+        'asmStates.pushTop.active': '='
+       }
+     , transclude: true
+     , template: '<div ng-class="{asm: true, asm-vertical: true, asm-top: true, ' + 
+        'asm-top-open: asmStates.pushTop.active}" ng-transclude></div>' 
   };
-}]);
+});
 
-slideMenu.directive('asmSlideBottom', ['$compile', function($compile) {
+slideMenu.directive('asmSlideBottom', function() {
   return {
       restrict: 'AEC'
-    , priority: 1000
-    , controller: function($scope, $element, $attrs) {
-        $scope.asmSlideBottomClasses = ['asm', 'asm-horizontal', 'asm-bottom'];
-        ]
-        $scope.watch('asmMenuStates.slideBottom', function(newState, oldState) {
-          if (newState && !oldState) {
-            $scope.asmSlideBottomClasses = ['asm', 'asm-horizontal', 'asm-bottom', 'asm-bottom-open'];
-          }
-          else if (!newState && oldState) {
-            $scope.asmSlideBottomClasses = ['asm', 'asm-horizontal', 'asm-bottom'];
-          }
-        });
-      }
-    , link: function(scope, element, attr) {
-      element[0].classList.add('asm');
-      element[0].classList.add('asm-vertical');
-      element[0].classList.add('asm-bottom');
-    }
+     , scope: {
+        'asmStates.slideBottom.active': '='
+       }
+     , transclude: true
+     , template: '<div ng-class="{asm: true, asm-vertical: true, asm-bottom: true, ' + 
+        'asm-bottom-open: asmStates.slideBottom.active}" ng-transclude></div>' 
   };
-}]);
+});
 
-slideMenu.directive('asmPushBottom', ['$compile', function($compile) {
+slideMenu.directive('asmPushBottom', function() {
   return {
       restrict: 'AEC'
-    , priority: 1000
-    , controller: function($scope, $element, $attrs) {
-        $scope.asmPushBottomClasses = ['asm', 'asm-horizontal', 'asm-bottom'];
-        ]
-        $scope.watch('asmMenuStates.pushBottom', function(newState, oldState) {
-          if (newState && !oldState) {
-            $scope.asmPushBottomClasses = ['asm', 'asm-horizontal', 'asm-bottom', 'asm-bottom-open'];
-          }
-          else if (!newState && oldState) {
-            $scope.asmPushBottomClasses = ['asm', 'asm-horizontal', 'asm-bottom'];
-          }
-        });
-      }
-    , link: function(scope, element, attr) {
-      element[0].classList.add('asm');
-      element[0].classList.add('asm-vertical');
-      element[0].classList.add('asm-bottom');
-    }
+     , scope: {
+        'asmStates.pushBottom.active': '='
+       }
+     , transclude: true
+     , template: '<div ng-class="{asm: true, asm-vertical: true, asm-bottom: true, ' + 
+        'asm-bottom-open: asmStates.pushBottom.active}" ng-transclude></div>' 
   };
-}]);
+});
 
-slideMenu.directive('asmWrapper', ['$compile', '$document', function($compile, $document) {
+slideMenu.directive('asmWrapper', function() {
   return {
       restrict: 'AEC'
-    , controller: function($scope, $element, $attrs) {
-        this.toggleOpen = function(push) {
-          $element[0].classList.toggle('asm-open');
-          $element[0].classList.toggle('asm-closed');
-          switch(push) {
-            case 'top':
-              $element[0].classList.toggle('asm-body-push-top');
-              break;
-            case 'bottom':
-              $element[0].classList.toggle('asm-body-push-bottom');
-              break;
-            case 'left':
-              $element[0].classList.toggle('asm-body-push-left');
-              break;
-            case 'right':
-              $element[0].classList.toggle('asm-body-push-right');
-              break;
-            default:
-              break;
-          }
-          // Create or destroy asm-mask
-          if ($attrs.mask) {
-            var mask = $document[0].getElementById('asm-mask');
-            if (mask) {
-              $element[0].removeChild(mask);
-            }
-            else {
-              mask = $document[0].createElement('div');
-              mask.setAttribute('id', 'asm-mask');
-              $element[0].appendChild(mask);
-            }
-          }
-        };
+    , scope: {
+        'asmPush': '='
       }
-    , link: function(scope, element, attr) {
-        element[0].classList.add('asm-wrapper');
-        element[0].classList.add('asm-closed');
-        $compile(element.contents())(scope);
-      }
+    , transclude: true
+    , template: '<div ng-class="{asm-wrapper: true, asm-body-closed: !asmPush, ' + 
+        'asm-body-push-left: asmPush === "pushLeft", asm-body-push-right: asmPush === "pushRight", ' + 
+        'asm-body-push-top: asmPush === "pushTop", asm-body-push-bottom: asmPush === "pushBottom"}" ' + 
+        'ng-transclude></div>'
   };
-}]);
+});
 
 slideMenu.directive('asmControl', ['$compile', 'asmState', function($compile, asmState) {
   return {
@@ -277,7 +162,6 @@ slideMenu.directive('asmControl', ['$compile', 'asmState', function($compile, as
         element.find('a').bind('click', function(ev) {
           ev.preventDefault();
           asmState.toggle(attrs.asmMenu);
-          //scope.$emit('asm-'+attrs.asmMenu);
         });
         $compile(element.contents())(scope);
       }
