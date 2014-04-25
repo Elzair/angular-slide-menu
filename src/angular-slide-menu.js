@@ -26,15 +26,15 @@ slideMenu.factory('asmState', ['$rootScope', function($rootScope) {
       var menuValue = $rootScope.asmStates[menuKey];
       var canToggle = true;
       var key = null
-      for (key in $rootScope.asmStates) {
-        var value = $rootScope.asmStates[key];
-        // Ensure that no other exclusive menus are active, and do not 
-        // activate an exclusive menu if any other menu is active.
-        if ((key !== menuKey) && ((value.exclusive && value.active) || menuValue.exclusive)) {
-          canToggle = false;
-          break;
+        for (key in $rootScope.asmStates) {
+          var value = $rootScope.asmStates[key];
+          // Ensure that no other exclusive menus are active, and do not 
+          // activate an exclusive menu if any other menu is active.
+          if ((key !== menuKey) && ((value.exclusive && value.active) || menuValue.exclusive)) {
+            canToggle = false;
+            break;
+          }
         }
-      }
       if (canToggle) {
         $rootScope.asmStates[menuKey].active = !$rootScope.asmStates[menuKey].active;
         // Update asm-wrapper on whether it needs pushing aside
@@ -54,64 +54,58 @@ slideMenu.factory('asmState', ['$rootScope', function($rootScope) {
 slideMenu.directive('asmSlideLeft', function($rootScope) {
   return {
       restrict: 'AEC'
-    //, scope: {
-    //   'asmStates.slideLeft.active': '='
-    //  }
-    //, transclude: true
-    //, template: '<div ng-class="{asm: true, \'asm-horizontal\': true, \'asm-left\': true, ' + 
-    //   '\'asm-left-open\': asmStates.slideLeft.active}">' + 
-    //   '<p>{{asmStates.slideLeft.active}}</p><div ng-transclude></div></div>' 
+    , scope: {}
     , link: function(scope, element, attrs) {
         element[0].outerHTML = '<div ng-class="{asm: true, \'asm-horizontal\': true, \'asm-left\': true, ' + 
-         '\'asm-left-open\': $rootScope.asmStates.slideLeft.active}">' + element[0].outerHTML + '</div';
+        '\'asm-left-open\': $rootScope.asmStates.slideLeft.active}">' + element[0].outerHTML + '</div';
       }
   };
 });
 
 slideMenu.directive('asmPushLeft', function() {
   return {
-       restrict: 'AEC'
-     , scope: {
+      restrict: 'AEC'
+    , scope: {
         'asmStates.pushLeft.active': '='
-       }
-     , transclude: true
-     , template: '<div ng-class="{asm: true, \'asm-horizontal\': true, \'asm-left\': true, ' + 
+      }
+    , transclude: true
+    , template: '<div ng-class="{asm: true, \'asm-horizontal\': true, \'asm-left\': true, ' + 
         '\'asm-left-open\': asmStates.pushLeft.active}" ng-transclude></div>' 
   };
 });
 
 slideMenu.directive('asmSlideRight', function() {
   return {
-       restrict: 'AEC'
-     , scope: {
+      restrict: 'AEC'
+    , scope: {
         'asmStates.slideRight.active': '='
-       }
-     , transclude: true
-     , template: '<div ng-class="{asm: true, \'asm-horizontal\': true, \'asm-right\': true, ' + 
+      }
+    , transclude: true
+    , template: '<div ng-class="{asm: true, \'asm-horizontal\': true, \'asm-right\': true, ' + 
         '\'asm-right-open\': asmStates.slideRight.active}" ng-transclude></div>' 
   };
 });
 
 slideMenu.directive('asmPushRight', function() {
   return {
-       restrict: 'AEC'
-     , scope: {
+      restrict: 'AEC'
+    , scope: {
         'asmStates.pushRight.active': '='
-       }
-     , transclude: true
-     , template: '<div ng-class="{asm: true, \'asm-horizontal\': true, \'asm-right\': true, ' + 
+      }
+    , transclude: true
+    , template: '<div ng-class="{asm: true, \'asm-horizontal\': true, \'asm-right\': true, ' + 
         '\'asm-right-open\': asmStates.pushRight.active}" ng-transclude></div>' 
   };
 });
 
 slideMenu.directive('asmSlideTop', function() {
   return {
-       restrict: 'AEC'
-     , scope: {
+      restrict: 'AEC'
+    , scope: {
         'asmStates.slideTop.active': '='
-       }
-     , transclude: true
-     , template: '<div ng-class="{asm: true, \'asm-vertical\': true, \'asm-top\': true, ' + 
+      }
+    , transclude: true
+    , template: '<div ng-class="{asm: true, \'asm-vertical\': true, \'asm-top\': true, ' + 
         '\'asm-top-open\': asmStates.slideTop.active}" ng-transclude></div>' 
   };
 });
@@ -119,11 +113,11 @@ slideMenu.directive('asmSlideTop', function() {
 slideMenu.directive('asmPushTop', function() {
   return {
       restrict: 'AEC'
-     , scope: {
+    , scope: {
         'asmStates.pushTop.active': '='
-       }
-     , transclude: true
-     , template: '<div ng-class="{asm: true, \'asm-vertical\': true, \'asm-top\': true, ' + 
+      }
+    , transclude: true
+    , template: '<div ng-class="{asm: true, \'asm-vertical\': true, \'asm-top\': true, ' + 
         '\'asm-top-open\': asmStates.pushTop.active}" ng-transclude></div>' 
   };
 });
@@ -131,11 +125,11 @@ slideMenu.directive('asmPushTop', function() {
 slideMenu.directive('asmSlideBottom', function() {
   return {
       restrict: 'AEC'
-     , scope: {
+    , scope: {
         'asmStates.slideBottom.active': '='
-       }
-     , transclude: true
-     , template: '<div ng-class="{asm: true, \'asm-vertical\': true, \'asm-bottom\': true, ' + 
+      }
+    , transclude: true
+    , template: '<div ng-class="{asm: true, \'asm-vertical\': true, \'asm-bottom\': true, ' + 
         '\'asm-bottom-open\': asmStates.slideBottom.active}" ng-transclude></div>' 
   };
 });
@@ -143,11 +137,11 @@ slideMenu.directive('asmSlideBottom', function() {
 slideMenu.directive('asmPushBottom', function() {
   return {
       restrict: 'AEC'
-     , scope: {
+    , scope: {
         'asmStates.pushBottom.active': '='
-       }
-     , transclude: true
-     , template: '<div ng-class="{asm: true, \'asm-vertical\': true, \'asm-bottom\': true, ' + 
+      }
+    , transclude: true
+    , template: '<div ng-class="{asm: true, \'asm-vertical\': true, \'asm-bottom\': true, ' + 
         '\'asm-bottom-open\': asmStates.pushBottom.active}" ng-transclude></div>' 
   };
 });
@@ -156,7 +150,7 @@ slideMenu.directive('asmWrapper', function() {
   return {
       restrict: 'AEC'
     , scope: {
-        'asmPush': '='
+      'asmPush': '='
       }
     , transclude: true
     , template: '<div ng-class="{\'asm-wrapper\': true, \'asm-body-closed\': !asmPush, ' + 

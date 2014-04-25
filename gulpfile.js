@@ -6,9 +6,9 @@ var fs      = require('fs')
 
 gulp.task('default', ['webpack:build']);
 
-gulp.task('build', ['webpack:build', function() {
+gulp.task('build', ['webpack:build'], function() {
   gulp.watch(['src/*'], ['webpack:build']);
-}]);
+});
 
 gulp.task('webpack:build', function(cb) {
   var config = require('./webpack.config');
@@ -21,9 +21,9 @@ gulp.task('webpack:build', function(cb) {
   });
 });
 
-gulp.task('build-dev', ['webpack:build-dev', function() {
+gulp.task('build-dev', ['webpack:build-dev'], function() {
   gulp.watch(['src/*'], ['webpack:build-dev']);
-}]);
+});
 
 gulp.task('webpack:build-dev', function(cb) {
   var config = require('./webpack.dev.config');
