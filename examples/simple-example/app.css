@@ -1,0 +1,8 @@
+ul {
+  list-style: none;
+}
+
+html, body, #wrapper {
+  width: 100%;
+  height: 100%;
+}

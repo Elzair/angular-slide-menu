@@ -36,23 +36,35 @@ slideMenu.factory('asmState', ['$rootScope', function($rootScope) {
         }
       }
       if (canToggle) {
-        menuValue.active = !menuValue.active;
+        $rootScope.asmStates[menuKey].active = !$rootScope.asmStates[menuKey].active;
         // Update asm-wrapper on whether it needs pushing aside
-        $rootScope.asmPush = menuValue.exclusive ? menuKey : null;
+        $rootScope.asmPush = $rootScope.asmStates[menuKey].exclusive ? menuKey : null;
+        console.log(menuKey + ' active:' + $rootScope.asmStates[menuKey].active);
+      }
+      else {
+        console.log('Cannot toggle!');
       }
     } 
   };
+  return {
+    toggle: toggle
+  }
 }]);
 
-slideMenu.directive('asmSlideLeft', function() {
+slideMenu.directive('asmSlideLeft', function($rootScope) {
   return {
-       restrict: 'AEC'
-     , scope: {
-        'asmStates.slideLeft.active': '='
-       }
-     , transclude: true
-     , template: '<div ng-class="{asm: true, asm-horizontal: true, asm-left: true, ' + 
-        'asm-left-open: asmStates.slideLeft.active}" ng-transclude></div>' 
+      restrict: 'AEC'
+    //, scope: {
+    //   'asmStates.slideLeft.active': '='
+    //  }
+    //, transclude: true
+    //, template: '<div ng-class="{asm: true, \'asm-horizontal\': true, \'asm-left\': true, ' + 
+    //   '\'asm-left-open\': asmStates.slideLeft.active}">' + 
+    //   '<p>{{asmStates.slideLeft.active}}</p><div ng-transclude></div></div>' 
+    , link: function(scope, element, attrs) {
+        element[0].outerHTML = '<div ng-class="{asm: true, \'asm-horizontal\': true, \'asm-left\': true, ' + 
+         '\'asm-left-open\': $rootScope.asmStates.slideLeft.active}">' + element[0].outerHTML + '</div';
+      }
   };
 });
 
@@ -63,8 +75,8 @@ slideMenu.directive('asmPushLeft', function() {
         'asmStates.pushLeft.active': '='
        }
      , transclude: true
-     , template: '<div ng-class="{asm: true, asm-horizontal: true, asm-left: true, ' + 
-        'asm-left-open: asmStates.pushLeft.active}" ng-transclude></div>' 
+     , template: '<div ng-class="{asm: true, \'asm-horizontal\': true, \'asm-left\': true, ' + 
+        '\'asm-left-open\': asmStates.pushLeft.active}" ng-transclude></div>' 
   };
 });
 
@@ -75,8 +87,8 @@ slideMenu.directive('asmSlideRight', function() {
         'asmStates.slideRight.active': '='
        }
      , transclude: true
-     , template: '<div ng-class="{asm: true, asm-horizontal: true, asm-right: true, ' + 
-        'asm-right-open: asmStates.slideRight.active}" ng-transclude></div>' 
+     , template: '<div ng-class="{asm: true, \'asm-horizontal\': true, \'asm-right\': true, ' + 
+        '\'asm-right-open\': asmStates.slideRight.active}" ng-transclude></div>' 
   };
 });
 
@@ -87,8 +99,8 @@ slideMenu.directive('asmPushRight', function() {
         'asmStates.pushRight.active': '='
        }
      , transclude: true
-     , template: '<div ng-class="{asm: true, asm-horizontal: true, asm-right: true, ' + 
-        'asm-right-open: asmStates.pushRight.active}" ng-transclude></div>' 
+     , template: '<div ng-class="{asm: true, \'asm-horizontal\': true, \'asm-right\': true, ' + 
+        '\'asm-right-open\': asmStates.pushRight.active}" ng-transclude></div>' 
   };
 });
 
@@ -99,8 +111,8 @@ slideMenu.directive('asmSlideTop', function() {
         'asmStates.slideTop.active': '='
        }
      , transclude: true
-     , template: '<div ng-class="{asm: true, asm-vertical: true, asm-top: true, ' + 
-        'asm-top-open: asmStates.slideTop.active}" ng-transclude></div>' 
+     , template: '<div ng-class="{asm: true, \'asm-vertical\': true, \'asm-top\': true, ' + 
+        '\'asm-top-open\': asmStates.slideTop.active}" ng-transclude></div>' 
   };
 });
 
@@ -111,8 +123,8 @@ slideMenu.directive('asmPushTop', function() {
         'asmStates.pushTop.active': '='
        }
      , transclude: true
-     , template: '<div ng-class="{asm: true, asm-vertical: true, asm-top: true, ' + 
-        'asm-top-open: asmStates.pushTop.active}" ng-transclude></div>' 
+     , template: '<div ng-class="{asm: true, \'asm-vertical\': true, \'asm-top\': true, ' + 
+        '\'asm-top-open\': asmStates.pushTop.active}" ng-transclude></div>' 
   };
 });
 
@@ -123,8 +135,8 @@ slideMenu.directive('asmSlideBottom', function() {
         'asmStates.slideBottom.active': '='
        }
      , transclude: true
-     , template: '<div ng-class="{asm: true, asm-vertical: true, asm-bottom: true, ' + 
-        'asm-bottom-open: asmStates.slideBottom.active}" ng-transclude></div>' 
+     , template: '<div ng-class="{asm: true, \'asm-vertical\': true, \'asm-bottom\': true, ' + 
+        '\'asm-bottom-open\': asmStates.slideBottom.active}" ng-transclude></div>' 
   };
 });
 
@@ -135,8 +147,8 @@ slideMenu.directive('asmPushBottom', function() {
         'asmStates.pushBottom.active': '='
        }
      , transclude: true
-     , template: '<div ng-class="{asm: true, asm-vertical: true, asm-bottom: true, ' + 
-        'asm-bottom-open: asmStates.pushBottom.active}" ng-transclude></div>' 
+     , template: '<div ng-class="{asm: true, \'asm-vertical\': true, \'asm-bottom\': true, ' + 
+        '\'asm-bottom-open\': asmStates.pushBottom.active}" ng-transclude></div>' 
   };
 });
 
@@ -147,9 +159,9 @@ slideMenu.directive('asmWrapper', function() {
         'asmPush': '='
       }
     , transclude: true
-    , template: '<div ng-class="{asm-wrapper: true, asm-body-closed: !asmPush, ' + 
-        'asm-body-push-left: asmPush === "pushLeft", asm-body-push-right: asmPush === "pushRight", ' + 
-        'asm-body-push-top: asmPush === "pushTop", asm-body-push-bottom: asmPush === "pushBottom"}" ' + 
+    , template: '<div ng-class="{\'asm-wrapper\': true, \'asm-body-closed\': !asmPush, ' + 
+        '\'asm-body-push-left\': asmPush === \'pushLeft\', \'asm-body-push-right\': asmPush === \'pushRight\', ' + 
+        '\'asm-body-push-top\': asmPush === \'pushTop\', \'asm-body-push-bottom\': asmPush === \'pushBottom\'}" ' + 
         'ng-transclude></div>'
   };
 });
