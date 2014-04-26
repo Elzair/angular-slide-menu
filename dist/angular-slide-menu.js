@@ -56,62 +56,63 @@
 	var slideMenu = angular.module('slideMenu', []);
 	
 	slideMenu.factory('asmService', ['$rootScope', function($rootScope) {
-	  // This object tracks the status of each window and whether or not
-	  // it must be the only active window at a given time 
-	  var asmStates = {
-	      'slideLeft': {active: false, exclusive: false}
-	    , 'slideRight': {active: false, exclusive: false}
-	    , 'slideTop': {active: false, exclusive: false}
-	    , 'slideBottom': {active: false, exclusive: false}
-	    , 'pushLeft': {active: false, exclusive: true}
-	    , 'pushRight': {active: false, exclusive: true}
-	    , 'pushTop': {active: false, exclusive: true}
-	    , 'pushBottom': {active: false, exclusive: true}
-	  };
+	  return {
+	      // This object tracks the status of each window and whether or not
+	      // it must be the only active window at a given time 
+	      asmStates: {
+	          'slideLeft': {active: false, exclusive: false}
+	        , 'slideRight': {active: false, exclusive: false}
+	        , 'slideTop': {active: false, exclusive: false}
+	        , 'slideBottom': {active: false, exclusive: false}
+	        , 'pushLeft': {active: false, exclusive: true}
+	        , 'pushRight': {active: false, exclusive: true}
+	        , 'pushTop': {active: false, exclusive: true}
+	        , 'pushBottom': {active: false, exclusive: true}
+	      }
 	
-	  // This object tracks whether or not to push the asm-wrapper
-	  var asmPush = null;
+	      // This object tracks whether or not to push the asm-wrapper
+	    , asmPush: null
 	
-	  /** This function toggles one of the menus listed in asmStates from 
-	   *  active to inactive and vice-versa based on certain criteria.
-	   *  @param menuKey the menu to attempt to toggle
-	   */
-	  var toggle = function(menuKey) {
-	    if (asmStates.hasOwnProperty(menuKey)) {
-	      var menuValue = asmStates[menuKey];
-	      var canToggle = true;
-	      var key = null
-	      for (key in asmStates) {
-	        var value = asmStates[key];
-	        // Ensure that no other exclusive menus are active, and do not 
-	        // activate an exclusive menu if any other menu is active.
-	        if ((key !== menuKey) && ((value.exclusive && value.active) || menuValue.exclusive)) {
-	          canToggle = false;
-	          break;
+	      /** This function toggles one of the menus listed in asmStates from 
+	       *  active to inactive and vice-versa based on certain criteria.
+	       *  @param menuKey the menu to attempt to toggle
+	       */
+	    , toggle: function(menuKey) {
+	        if (this.asmStates.hasOwnProperty(menuKey)) {
+	          var menuValue = this.asmStates[menuKey];
+	          var canToggle = true;
+	          var key = null
+	          for (key in this.asmStates) {
+	            var value = this.asmStates[key];
+	            // Ensure that no other exclusive menus are active, and do not 
+	            // activate an exclusive menu if any other menu is active.
+	            //if (key === menuKey) {
+	            //  continue;
+	            //}
+	            if ((key !== menuKey) && (value.active && (value.exclusive || menuValue.exclusive))) {
+	              canToggle = false;
+	              break;
+	            }
+	          }
+	          if (canToggle) {
+	            this.asmStates[menuKey].active = !this.asmStates[menuKey].active;
+	            // Update asm-wrapper on whether it needs pushing aside
+	            console.log(menuKey.substring(4).toLowerCase());
+	            this.asmPush = (menuKey.substring(0, 4) === 'push' && this.asmStates[menuKey].active) 
+	              ? menuKey.substring(4).toLowerCase() : null;
+	            console.log(this.asmPush);
+	            console.log(menuKey + ' active: ' + this.asmStates[menuKey].active);
+	            // Emit event
+	            $rootScope.$emit('asmEvent', null);
+	          }
+	          else {
+	            console.log('Cannot toggle!');
+	          }
+	        } 
+	        else {
+	          console.log('Unknown menu!');
 	        }
 	      }
-	      if (canToggle) {
-	        asmStates[menuKey].active = !asmStates[menuKey].active;
-	        // Update asm-wrapper on whether it needs pushing aside
-	        asmPush = menuKey.substring(0, 4) === 'push' ? menuKey.substring(4).toLowerCase() : null;
-	        console.log(menuKey + ' active: ' + asmStates[menuKey].active);
-	        // Emit event
-	        $rootScope.$emit('asmEvent', null);
-	      }
-	      else {
-	        console.log('Cannot toggle!');
-	      }
-	    } 
-	    else {
-	      console.log('Unknown menu!');
-	    }
-	  };
-	
-	  // Return Service object
-	  return {
-	      asmStates: asmStates
-	    , asmPush: asmPush
-	    , toggle: toggle
 	  };
 	}]);
 	
@@ -257,6 +258,7 @@
 	    , link: function(scope, element, attrs) {
 	        element.addClass('asm-wrapper asm-body-closed');
 	        $rootScope.$on('asmEvent', function() {
+	          console.log('Body Caught Event: ' + asmService.asmPush);
 	          switch(asmService.asmPush) {
 	            case 'left':
 	              element.removeClass('asm-body-closed');
