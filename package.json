@@ -1,6 +1,6 @@
 {
   "name": "angular-slide-menu",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A simple, mobile-ready sliding menu directive for AngularJS",
   "main": "dist/angular-slide-menu",
   "scripts": {
