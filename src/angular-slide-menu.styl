@@ -1,3 +1,8 @@
+width = 300px
+negwidth = -300px
+height = 100px
+negheight = -100px
+
 // Common styles
 asm-vendor(prop, args)
   -webkit-{prop} args
@@ -30,13 +35,13 @@ asm-vendor(prop, args)
 
 .asm-horizontal
   top 0
-  width 300px
+  width width
   height 100%
 
 .asm-vertical
   left 0
   width 100%
-  height 100px
+  height height
 
 .asm-body-closed
   left 0
@@ -46,47 +51,47 @@ asm-vendor(prop, args)
 // Left
 
 .asm-left
-  left -300px
+  left negwidth
 
 .asm-left-open
   left 0
 
 .asm-body-push-left
-  left 300px
+  left width
   asm-vendor('transition', all 0.3s ease-in-out)
 
 // Right
 
 .asm-right
-  right -300px
+  right negwidth
 
 .asm-right-open
   right 0
 
 .asm-body-push-right
-  left -300px
+  left negwidth
   asm-vendor('transition', all 0.3s ease-in-out)
 
 // Top
 
 .asm-top
-  top -100px
+  top negheight
 
 .asm-top-open
   top 0
 
 .asm-body-push-top
-  top 100px
+  top height
   asm-vendor('transition', all 0.3s ease-in-out)
 
 // Bottom
 
 .asm-bottom
-  bottom -100px
+  bottom negheight
 
 .asm-bottom-open
   bottom 0
 
 .asm-body-push-bottom
-  top -100px
+  top negheight
   asm-vendor('transition', all 0.3s ease-in-out)
