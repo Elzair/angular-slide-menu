@@ -296,8 +296,9 @@
 	            }
 	          , post: function postLink(scope, iElement, iAttrs) {
 	              iElement.find('a').on('click', function(ev) {
+	                console.log(iAttrs);
 	                ev.preventDefault();
-	                asmService.toggle(attrs.menu);
+	                asmService.toggle(iAttrs.asmControl);
 	              });
 	            }
 	        };

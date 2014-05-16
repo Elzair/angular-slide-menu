@@ -1,6 +1,6 @@
 {
   "name": "angular-slide-menu",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "description": "A simple, mobile-ready sliding menu directive for AngularJS",
   "main": "dist/angular-slide-menu",
   "scripts": {
@@ -31,6 +31,8 @@
     "style-loader": "~0.6.3",
     "css-loader": "~0.6.12",
     "stylus-loader": "~0.2.0",
-    "gulp-util": "~2.2.14"
+    "gulp-util": "~2.2.14",
+    "karma": "~0.12.16",
+    "karma-jasmine": "~0.1.5"
   }
 }
