@@ -42,20 +42,20 @@ slideMenu.factory('asmService', ['$rootScope', function($rootScope) {
           if (canToggle) {
             this.asmStates[menuKey].active = !this.asmStates[menuKey].active;
             // Update asm-wrapper on whether it needs pushing aside
-            console.log(menuKey.substring(4).toLowerCase());
+            //console.log(menuKey.substring(4).toLowerCase());
             this.asmPush = (menuKey.substring(0, 4) === 'push' && this.asmStates[menuKey].active) 
               ? menuKey.substring(4).toLowerCase() : null;
-            console.log(this.asmPush);
-            console.log(menuKey + ' active: ' + this.asmStates[menuKey].active);
+            // console.log(this.asmPush);
+            // console.log(menuKey + ' active: ' + this.asmStates[menuKey].active);
             // Emit event
             $rootScope.$emit('asmEvent', null);
           }
           else {
-            console.log('Cannot toggle!');
+            //console.log('Cannot toggle!');
           }
         } 
         else {
-          console.log('Unknown menu!');
+          // console.log('Unknown menu!');
         }
       }
   };
@@ -203,7 +203,7 @@ slideMenu.directive('asmWrapper', ['$rootScope', 'asmService', function($rootSco
     , link: function(scope, element, attrs) {
         element.addClass('asm-wrapper asm-body-closed');
         $rootScope.$on('asmEvent', function() {
-          console.log('Body Caught Event: ' + asmService.asmPush);
+          // console.log('Body Caught Event: ' + asmService.asmPush);
           switch(asmService.asmPush) {
             case 'left':
               element.removeClass('asm-body-closed');
@@ -241,7 +241,7 @@ slideMenu.directive('asmControl', ['asmService', function(asmService) {
             }
           , post: function postLink(scope, iElement, iAttrs) {
               iElement.find('a').on('click', function(ev) {
-                console.log(iAttrs);
+                //console.log(iAttrs);
                 ev.preventDefault();
                 asmService.toggle(iAttrs.asmControl);
               });
